@@ -5,10 +5,10 @@
 
 using namespace std;
 
-#define IDX(a,b)  ((a)) + ((b)) * width
+#define IDX(a,b)  mod((a),width) + mod((b),height) * width
 
-int width=10;
-int height=10;
+int width=5;
+int height=5;
 
 void display(CellMap& GameOfLife) {
 
@@ -24,13 +24,14 @@ void display(CellMap& GameOfLife) {
 
 int main () {
 
-	CellMap GameOfLife(width,height);
+	CellMap GameOfLife(width,height,true);
 	
 	GameOfLife.makeCellAlive(2,1);
 	GameOfLife.makeCellAlive(2,2);
 	GameOfLife.makeCellAlive(2,3);
 	GameOfLife.makeCellAlive(1,3);
 	GameOfLife.makeCellAlive(0,2);
+
 	display(GameOfLife);
 
 	while(true) {

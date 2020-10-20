@@ -1,16 +1,26 @@
 #include "CellMap.hpp"
+#include <iostream>
 
-#define IDX(a,b)  (a) + (b) * width
+int mod(int value,int m) {
+	int modulo = value % m;
+	if (modulo < 0) modulo += m;
+
+	return modulo;
+}
+
+#define IDX(a,b)  mod((a),width) + mod((b),height) * width
 
 using namespace std;
 
 bool CellMap::isInbounds(int x,int y) {
+	if(EdgeWrap) return true;
 	return (0 <= x  && x < width && 0 <= y && y < height);
 }
 
-CellMap::CellMap(int width, int height) {
+CellMap::CellMap(int width, int height,bool EdgeWrap) {
 	this->width = width;
 	this->height = height;
+	this->EdgeWrap = EdgeWrap;
 
 	temp_state = new vector<bool>();
 	curr_state = new vector<bool>();
@@ -68,5 +78,6 @@ void CellMap::step() {
 	t = temp_state;
 	temp_state = curr_state;
 	curr_state = t;
+
 }
 
