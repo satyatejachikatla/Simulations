@@ -1,0 +1,7 @@
+export CC="gcc"
+export CXX="g++"
+export AR="ar"
+export MAKE="make"
+export LIBS="-lm"
+export CFLAGS="-I."
+export LDFLAGS=""
