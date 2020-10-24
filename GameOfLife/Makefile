@@ -1,8 +1,8 @@
 
-object-files := main.o CellMap/CellMap.o
+object-files := main.o CellMap/CellMap.o CellMap/CellMapFactory.o CellMap/CPU/CellMapCPU.o
 prog-name    := game-of-life
 
-CFLAGS += "-I."
+CFLAGS += -I.
 
 LDFLAGS += -Wl,--no-as-needed \
 			$(shell pkg-config opencv --cflags --libs)

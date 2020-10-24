@@ -3,7 +3,7 @@
 object-files ?= 
 prog-name ?= run
 
-object-files-cpp := $(shell echo $(object-files) | sed 's/.o/.cpp/g')
+object-files-cpp := $(shell echo $(object-files) | sed 's/\.o/\.cpp/g')
 
 $(info Files getting built : $(object-files-cpp))
 

@@ -1,33 +1,35 @@
-#pragma once
+#ifndef SIMULATION_GAME_OF_LIFE_CELL_MAP_HPP_
+#define SIMULATION_GAME_OF_LIFE_CELL_MAP_HPP_
 
 #include <vector>
 
-using namespace std;
-
-int mod(int value,int m);
-
 class CellMap {
 
-private:
-
-	vector<bool>* temp_state;
-	bool EdgeWrap;
-
-	bool isInbounds(int x,int y);
+protected:
 
 	int width;
 	int height;
+	bool edgeWrap;
+
+	std::vector<bool>* cells;
+
+	bool IsInbounds(int x,int y);
+	int GetCellIndex(int i,int j);
 
 public:
 
-	vector<bool>* curr_state;
-
 	CellMap()=delete;
-	CellMap(int width, int height, bool EdgeWrap);
 
-	void makeCellAlive(int x, int y);
-	void makeCellDie(int x, int y);
-	int getNeighboursAliveCount(int x, int y);
-	void step();
+	CellMap(int width, int height, bool edge_wrap);
+
+	void MakeCellAlive(int x, int y);
+	void MakeCellDie(int x, int y);
+
+	bool GetCell(int x, int y);
+	int GetNeighboursAliveCount(int x, int y);
+
+	virtual void Step(int count) = 0;
 
 };
+
+#endif /*SIMULATION_GAME_OF_LIFE_CELL_MAP_HPP_*/
