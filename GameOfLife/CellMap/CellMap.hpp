@@ -21,9 +21,10 @@ public:
 	CellMap()=delete;
 
 	CellMap(int width, int height, bool edge_wrap);
+	virtual ~CellMap();
 
-	void MakeCellAlive(int x, int y);
-	void MakeCellDie(int x, int y);
+	virtual void MakeCellAlive(int x, int y);
+	virtual void MakeCellDie(int x, int y);
 
 	bool GetCell(int x, int y);
 	int GetNeighboursAliveCount(int x, int y);

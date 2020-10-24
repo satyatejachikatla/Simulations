@@ -13,6 +13,7 @@ private:
 
 public:
 	CellMapCPU(int width, int height, bool edge_wrap);
+	~CellMapCPU();
 	void Step(int count);
 
 };

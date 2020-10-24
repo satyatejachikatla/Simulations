@@ -25,6 +25,9 @@ CellMap::CellMap(int width, int height,bool edge_wrap) :
 	cells = new vector<bool>();
 	cells->resize(width*height,0);
 }
+CellMap::~CellMap(){
+	delete cells;
+}
 
 void CellMap::MakeCellAlive(int x, int y) {
 	(*cells)[IDX(x,y)] = true;

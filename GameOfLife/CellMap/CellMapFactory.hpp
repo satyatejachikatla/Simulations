@@ -5,6 +5,7 @@
 
 #include <CellMap/CellMap.hpp>
 #include <CellMap/CPU/CellMapCPU.hpp>
+#include <CellMap/GPU/CellMapCuda.cuh>
 
 struct CellMapFactoryConfig {
 	std::string implementation;

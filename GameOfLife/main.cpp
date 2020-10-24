@@ -21,7 +21,7 @@ void display(CellMap* GameOfLife,CellMapFactoryConfig& config) {
 int main () {
 
 	CellMapFactoryConfig config;
-	config.implementation = "CPU";
+	config.implementation = "Cuda";
 	config.height = 10;
 	config.width = 10;
 	config.edge_wrap = true;
@@ -35,11 +35,9 @@ int main () {
 	GameOfLife->MakeCellAlive(1,3);
 	GameOfLife->MakeCellAlive(0,2);
 
-	display(GameOfLife,config);
-
 	while(true) {
-		GameOfLife->Step(1);
 		display(GameOfLife,config);
+		GameOfLife->Step(1);
 		sleep(1);
 	}
 	return 0;

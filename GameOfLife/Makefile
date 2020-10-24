@@ -1,10 +1,21 @@
 
-object-files := main.o CellMap/CellMap.o CellMap/CellMapFactory.o CellMap/CPU/CellMapCPU.o
-prog-name    := game-of-life
+target := game-of-life
+
+objs :=	main.o \
+		CellMap/CellMap.o \
+		CellMap/CellMapFactory.o \
+		CellMap/GPU/CellMapCuda.o \
+		CellMap/CPU/CellMapCPU.o
 
 CFLAGS += -I.
+NVCFLAGS += -I. -I../include/
 
-LDFLAGS += -Wl,--no-as-needed \
-			$(shell pkg-config opencv --cflags --libs)
+LDFLAGS += -lm
+NVLDFLAGS += -lm
 
-include ../build/prog_cpp.mk
+# LDFLAGS += -Wl,--no-as-needed \
+# 			$(shell pkg-config opencv --cflags --libs)
+
+all: $(target)
+
+include ../build/prog.mk

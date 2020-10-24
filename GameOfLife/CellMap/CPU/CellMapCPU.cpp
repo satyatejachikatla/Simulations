@@ -9,6 +9,9 @@ CellMapCPU::CellMapCPU(int width, int height, bool edge_wrap) :
 		temp_cells = new vector<bool>();
 		temp_cells->resize(width*height,0);
 }
+CellMapCPU::~CellMapCPU(){
+	delete temp_cells;
+}
 
 void CellMapCPU::Step(int step_count) {
 
