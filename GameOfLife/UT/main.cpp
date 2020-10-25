@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <unistd.h>
 
 #include <CellMap/CellMapFactory.hpp>
 #include <ShellDisplay/ShellDisplay.hpp>
@@ -26,23 +25,12 @@ int main (int argc,char** argv) {
 	string imp = argv[1];
 	string display = argv[2];
 
-	void (*Display)(CellMap* GameOfLife,CellMapFactoryConfig& config);
+	void (*Display)(CellMap* ,CellMapFactoryConfig& );
 
 	if (imp != "Cuda" && imp != "CPU") {
 		usage();
 		return 0;
 	}
-
-	if (display == "Shell") {
-		Display = ShellDisplay;
-	} else if (display == "CV"){
-
-	}
-	else {
-		usage();
-		return 0;
-	} 
-
 
 	CellMapFactoryConfig config;
 	config.implementation = imp;
@@ -51,6 +39,17 @@ int main (int argc,char** argv) {
 	config.edge_wrap = true;
 	
 	CellMap* GameOfLife = CellMapFactory(config);
+
+	if (display == "Shell") {
+		Display = ShellDisplay;
+	} else if (display == "CV"){
+		OpenCVWindowInit(GameOfLife,config);
+		Display = OpenCVWindow;
+	}
+	else {
+		usage();
+		return 0;
+	} 
 
 	GameOfLife->MakeCellAlive(2,1);
 	GameOfLife->MakeCellAlive(2,2);
@@ -61,7 +60,6 @@ int main (int argc,char** argv) {
 	while(true) {
 		Display(GameOfLife,config);
 		GameOfLife->Step(1);
-		sleep(1);
 	}
 	return 0;
 

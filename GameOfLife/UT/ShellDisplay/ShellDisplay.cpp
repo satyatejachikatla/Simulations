@@ -1,4 +1,6 @@
 #include <iostream>
+#include <unistd.h>
+
 #include <ShellDisplay/ShellDisplay.hpp>
 
 using namespace std;
@@ -12,5 +14,5 @@ void ShellDisplay(CellMap* GameOfLife,CellMapFactoryConfig& config) {
 		cout << endl;
 	}
 	cout << "--------------------" << endl;
-
+	sleep(1);
 }

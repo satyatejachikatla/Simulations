@@ -11,8 +11,9 @@ NVCFLAGS += -I. -I.. -I../../include/
 LDFLAGS += -lm -L../CellMap/ -lcellmap
 NVLDFLAGS += -lm -L../CellMap/ -lcellmap
 
-# LDFLAGS += -Wl,--no-as-needed \
-# 			$(shell pkg-config opencv --cflags --libs)
+LDFLAGS += -Wl,--no-as-needed \
+			$(shell pkg-config opencv --cflags --libs)
+NVLDFLAGS += $(shell pkg-config opencv --cflags --libs)
 
 all: cellmap $(target)
 
