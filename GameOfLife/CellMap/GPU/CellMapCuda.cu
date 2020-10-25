@@ -86,16 +86,11 @@ void CellMapCuda::Step(int step_count) {
 
 	for(int c=0;c<step_count;c++) {
 		CellMapCudaStep<<<blocks,threads>>>(cells_gpu,cells_gpu_temp,width,height,edgeWrap);
-
+		checkCudaErrors(cudaGetLastError());
+		checkCudaErrors(cudaDeviceSynchronize());
 		t = cells_gpu;
 		cells_gpu = cells_gpu_temp;
 		cells_gpu_temp = t;
-	}
-
-	for(int j=0;j<height;j++) {
-		for(int i=0;i<width;i++) {
-			(*cells)[IDX(i,j)] = cells_gpu[IDX(i,j)];
-		}
 	}
 
 }

@@ -8,28 +8,44 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #define WINDOW_NAME "GameOfLife"
-#define SCALE 20
+#define SCALE 10
 
 using namespace std;
 using namespace cv;
 
-static CellMap* mouse_callback_GameOfLife=nullptr;
+static CellMap* callback_GameOfLife=nullptr;
+static bool consider_step=false;
 
 void mouse_callback(int  event, int  x, int  y, int  flag, void *param)
 {
-	if (mouse_callback_GameOfLife == nullptr) return;
+	if (callback_GameOfLife == nullptr) return;
 
 	x /= SCALE;
 	y /= SCALE;
 
 	if (event == EVENT_LBUTTONDBLCLK) {
 		cout << "MakeCellAlive : " << x << " " << y << endl;
-		mouse_callback_GameOfLife->MakeCellAlive(x,y);
+		callback_GameOfLife->MakeCellAlive(x,y);
 	}
 
 	if (event == EVENT_RBUTTONDBLCLK) {
 		cout << "MakeCellDie : " << x << " " << y << endl;
-		mouse_callback_GameOfLife->MakeCellDie(x,y);
+		callback_GameOfLife->MakeCellDie(x,y);
+	}
+
+	if (event == EVENT_MOUSEWHEEL) {
+		cout << "Taking Step" << endl;
+		consider_step=true;
+	}
+}
+
+void key_callback(int  key)
+{
+	if (callback_GameOfLife == nullptr) return;
+
+	if (key == ' ') {
+		cout << "Taking Step" << endl;
+		consider_step=true;
 	}
 }
 
@@ -57,7 +73,12 @@ Mat ConvertToImage(CellMap* GameOfLife,CellMapFactoryConfig& config) {
 }
 
 
-void OpenCVWindow(CellMap* GameOfLife,CellMapFactoryConfig& config) {
+void OpenCVWindow(CellMap* GameOfLife,CellMapFactoryConfig& config,int step) {
+
+	if(!consider_step) step=0; 
+	consider_step=false;
+
+	GameOfLife->Step(step);
 
 	Mat img1(config.width,config.height,CV_8UC3,cv::Scalar(0,0,0));
 	Mat img2(config.width*SCALE,config.height*SCALE,CV_8UC3,cv::Scalar(0,0,0));
@@ -68,13 +89,14 @@ void OpenCVWindow(CellMap* GameOfLife,CellMapFactoryConfig& config) {
 	resize(img1,img2,img2.size(),0,0,INTER_NEAREST);
 	imshow( WINDOW_NAME, img2 );
 
-	waitKey(1);
+	int k = waitKey(1);
+	key_callback(k);
 
-	sleep(1);
+	usleep(1000);
 }
 
 void OpenCVWindowInit(CellMap* GameOfLife,CellMapFactoryConfig& config) {
-	mouse_callback_GameOfLife=GameOfLife;
+	callback_GameOfLife=GameOfLife;
 	namedWindow( WINDOW_NAME, WINDOW_AUTOSIZE );
 	setMouseCallback(WINDOW_NAME, mouse_callback);
 }

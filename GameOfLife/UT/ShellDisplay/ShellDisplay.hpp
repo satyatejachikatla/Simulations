@@ -3,6 +3,6 @@
 
 #include <CellMap/CellMapFactory.hpp>
 
-void ShellDisplay(CellMap* GameOfLife,CellMapFactoryConfig& config);
+void ShellDisplay(CellMap* GameOfLife,CellMapFactoryConfig& config,int step);
 
 #endif /*SIMULATION_GAME_OF_LIFE_SHELL_DISPLAY_HPP_*/

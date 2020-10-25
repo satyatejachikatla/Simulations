@@ -25,7 +25,7 @@ int main (int argc,char** argv) {
 	string imp = argv[1];
 	string display = argv[2];
 
-	void (*Display)(CellMap* ,CellMapFactoryConfig& );
+	void (*Display)(CellMap* ,CellMapFactoryConfig& ,int );
 
 	if (imp != "Cuda" && imp != "CPU") {
 		usage();
@@ -34,8 +34,8 @@ int main (int argc,char** argv) {
 
 	CellMapFactoryConfig config;
 	config.implementation = imp;
-	config.height = 10;
-	config.width = 10;
+	config.height = 100;
+	config.width = 100;
 	config.edge_wrap = true;
 	
 	CellMap* GameOfLife = CellMapFactory(config);
@@ -58,8 +58,7 @@ int main (int argc,char** argv) {
 	GameOfLife->MakeCellAlive(0,2);
 
 	while(true) {
-		Display(GameOfLife,config);
-		GameOfLife->Step(1);
+		Display(GameOfLife,config,1);
 	}
 	return 0;
 
