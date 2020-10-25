@@ -8,13 +8,13 @@ objs ?=
 #DEPFLAGS = -MMD -MF $(@:,.o=.d)
 
 $(target): $(objs)
-	$(NVCC) $(NVCFLAGS) $(NVLDFLAGS) -o $@ $(notdir $^)
+	$(NVCC) $(NVCFLAGS) $(NVLDFLAGS) -shared -o $@ $(notdir $^)
 %.o: %.cpp
-	$(CXX) $(CFLAGS) $(LDFLAGS) -c $< $(DEPFLAGS)
+	$(CXX) $(CFLAGS) $(LDFLAGS) -fPIC -c $< $(DEPFLAGS)
 %.o: %.cu
-	$(NVCC) $(NVCFLAGS) $(NVLDFLAGS) -c $< $(DEPFLAGS)
+	$(NVCC) $(NVCFLAGS) $(NVLDFLAGS) --compiler-options '-fPIC' -c $< $(DEPFLAGS)
 
-.PHONY: clean_build
+.PHONY: clean
 
-clean_build:
+clean:
 	rm -f $(target) $(notdir $(objs)) $(deps)

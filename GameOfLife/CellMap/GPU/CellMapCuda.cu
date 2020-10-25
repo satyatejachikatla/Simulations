@@ -69,7 +69,7 @@ CellMapCuda::CellMapCuda(int width, int height, bool edge_wrap) :
 		checkCudaErrors(cudaMallocManaged((void **)&cells_gpu_temp, height*width*sizeof(*cells_gpu_temp)));
 
 		checkCudaErrors(cudaMemset(cells_gpu,0,height*width*sizeof(*cells_gpu)));
-		checkCudaErrors(cudaMemset(cells_gpu_temp,0,height*width*sizeof(*cells_gpu)));
+		checkCudaErrors(cudaMemset(cells_gpu_temp,0,height*width*sizeof(*cells_gpu_temp)));
 }
 CellMapCuda::~CellMapCuda(){
 	checkCudaErrors(cudaFree(cells_gpu));
@@ -108,4 +108,9 @@ void CellMapCuda::MakeCellAlive(int x, int y) {
 void CellMapCuda::MakeCellDie(int x, int y) {
 	CellMap::MakeCellDie(x,y);
 	cells_gpu[IDX(x,y)] = false;
+}
+
+bool CellMapCuda::GetCell(int x, int y){
+	(*cells)[IDX(x,y)] = cells_gpu[IDX(x,y)];
+	return (*cells)[IDX(x,y)];
 }

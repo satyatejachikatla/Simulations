@@ -26,7 +26,7 @@ public:
 	virtual void MakeCellAlive(int x, int y);
 	virtual void MakeCellDie(int x, int y);
 
-	bool GetCell(int x, int y);
+	virtual bool GetCell(int x, int y);
 	int GetNeighboursAliveCount(int x, int y);
 
 	virtual void Step(int count) = 0;

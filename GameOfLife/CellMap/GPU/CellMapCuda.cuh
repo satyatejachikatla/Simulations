@@ -17,6 +17,7 @@ public:
 
 	void MakeCellAlive(int x, int y);
 	void MakeCellDie(int x, int y);
+	bool GetCell(int x, int y);
 
 	void Step(int count);
 
