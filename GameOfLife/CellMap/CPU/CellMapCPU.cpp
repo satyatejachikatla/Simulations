@@ -6,7 +6,7 @@ using namespace std;
 
 CellMapCPU::CellMapCPU(int width, int height, bool edge_wrap) :
 	CellMap(width,height,edge_wrap) {
-		temp_cells = new vector<bool>();
+		temp_cells = new vector<uint8_t>();
 		temp_cells->resize(width*height,0);
 }
 CellMapCPU::~CellMapCPU(){
@@ -35,7 +35,7 @@ void CellMapCPU::Step(int step_count) {
 			}
 		}
 
-		vector<bool>* t;
+		vector<uint8_t>* t;
 
 		t = temp_cells;
 		temp_cells = cells;

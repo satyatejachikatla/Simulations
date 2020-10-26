@@ -4,6 +4,7 @@
 # Environment setup
 cd $(dirname "$0")/..
 export TOPDIR="`pwd`"
+cd -
 #======================================
 
 #======================================
@@ -11,16 +12,18 @@ export TOPDIR="`pwd`"
 export MAKE="make"
 
 #opencl defaults
-export OPENCL_UTILS_INCLUDE="-I$TOPDIR/common/OpenCL/include"
-export OPENCL_INCLUDE="-I/usr/include/"
+export OPENCL_DEFINES="-DCL_HPP_TARGET_OPENCL_VERSION=120 -DCL_HPP_MINIMUM_OPENCL_VERSION=120" 
+export OPENCL_UTILS_INCLUDE="$OPENCL_DEFINES -I$TOPDIR/common/OpenCL/include -L$TOPDIR/common/OpenCL/include -lOpenCLUtils"
+export OPENCL_INCLUDE="$OPENCL_DEFINES -I/usr/include/"
 export OPENCL_LIBRARY="-L/usr/lib/x86_64-linux-gnu/ -lOpenCL"
+
 
 #cuda defaults
 export CUDA_UTILS_INCLUDE="-I$TOPDIR/common/CUDA/include"
 
 # gcc,g++
 export CC="gcc"
-export CXX="g++"
+export CXX="g++ -std=c++11"
 export AR="ar"
 
 export CFLAGS="-Wl,--no-as-needed -Werror"
@@ -39,7 +42,16 @@ echo TOPDIR : $TOPDIR
 echo OPENCL_LIBRARY : $OPENCL_LIBRARY
 echo OPENCL_INCLUDE : $OPENCL_INCLUDE
 echo OPENCL_UTILS_INCLUDE : $OPENCL_UTILS_INCLUDE
+echo OPENCL_DEFINES : $OPENCL_DEFINES
 echo CUDA_UTILS_INCLUDE : $CUDA_UTILS_INCLUDE
 echo "-------------------------------------------"
 
+#======================================
+
+echo "Making Common Code"
+$MAKE -C $TOPDIR/common/OpenCL/include
+echo "-------------------------------------------"
+
+#======================================
+echo "Starting working Shell"
 bash

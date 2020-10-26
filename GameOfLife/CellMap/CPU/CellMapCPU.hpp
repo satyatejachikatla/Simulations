@@ -9,7 +9,7 @@ class CellMapCPU : public CellMap {
 
 private:
 
-	std::vector<bool>* temp_cells;	
+	std::vector<uint8_t>* temp_cells;	
 
 public:
 	CellMapCPU(int width, int height, bool edge_wrap);

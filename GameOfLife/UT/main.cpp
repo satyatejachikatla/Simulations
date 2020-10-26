@@ -10,7 +10,7 @@ using namespace std;
 
 void usage() {
 	cout << "1: Implementation" << endl;
-	cout << "\t(CPU,Cuda)" << endl;
+	cout << "\t(CPU,Cuda,CL)" << endl;
 	cout << "2: Display" << endl;
 	cout << "\t(Shell,CV)" << endl;
 }
@@ -27,15 +27,15 @@ int main (int argc,char** argv) {
 
 	void (*Display)(CellMap* ,CellMapFactoryConfig& ,int );
 
-	if (imp != "Cuda" && imp != "CPU") {
+	if (imp != "Cuda" && imp != "CPU" && imp != "CL") {
 		usage();
 		return 0;
 	}
 
 	CellMapFactoryConfig config;
 	config.implementation = imp;
-	config.height = 1000;
-	config.width = 1000;
+	config.height = 100;
+	config.width = 100;
 	config.edge_wrap = true;
 	
 	CellMap* GameOfLife = CellMapFactory(config);

@@ -22,7 +22,7 @@ CellMap::CellMap(int width, int height,bool edge_wrap) :
 	height(height),
 	edgeWrap(edge_wrap) {
 
-	cells = new vector<bool>();
+	cells = new vector<uint8_t>();
 	cells->resize(width*height,0);
 }
 CellMap::~CellMap(){

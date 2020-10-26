@@ -9,7 +9,7 @@
 
 #define WINDOW_NAME "GameOfLife"
 #define CONSIDER_STEP_DEFAULT true
-#define SCALE 1
+#define SCALE 10
 
 using namespace std;
 using namespace cv;
@@ -40,7 +40,7 @@ void key_callback(int  key)
 	if (callback_GameOfLife == nullptr) return;
 
 	if (key == ' ') {
-		//cout << "Taking Step" << endl;
+		cout << "Taking Step" << endl;
 		consider_step=true;
 	}
 }

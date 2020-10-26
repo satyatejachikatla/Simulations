@@ -11,7 +11,7 @@ protected:
 	int height;
 	bool edgeWrap;
 
-	std::vector<bool>* cells;
+	std::vector<uint8_t>* cells;
 
 	bool IsInbounds(int x,int y);
 	int GetCellIndex(int i,int j);

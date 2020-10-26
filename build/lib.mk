@@ -12,7 +12,7 @@ $(target): $(objs)
 %.o: %.cu
 	$(NVCC) $(NVCFLAGS) $(NVLDFLAGS) --compiler-options '-fPIC' -c $< $(DEPFLAGS)
 
-.PHONY: clean
+.PHONY: clean_build
 
-clean:
+clean_build:
 	rm -f $(target) $(notdir $(objs)) $(deps)
