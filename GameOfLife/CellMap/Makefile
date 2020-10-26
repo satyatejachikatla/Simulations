@@ -7,7 +7,7 @@ objs :=	CellMap.o \
 		CPU/CellMapCPU.o
 
 CFLAGS += -I..
-NVCFLAGS += -I.. -I../../include/
+NVCFLAGS +=	-I.. $(CUDA_UTILS_INCLUDE)
 
 LDFLAGS += -lm
 NVLDFLAGS += -lm
@@ -17,4 +17,4 @@ NVLDFLAGS += -lm
 
 all: $(target)
 
-include ../../build/lib.mk
+include $(TOPDIR)/build/lib.mk

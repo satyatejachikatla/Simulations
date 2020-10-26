@@ -8,13 +8,14 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #define WINDOW_NAME "GameOfLife"
-#define SCALE 10
+#define CONSIDER_STEP_DEFAULT true
+#define SCALE 1
 
 using namespace std;
 using namespace cv;
 
 static CellMap* callback_GameOfLife=nullptr;
-static bool consider_step=false;
+static bool consider_step=CONSIDER_STEP_DEFAULT;
 
 void mouse_callback(int  event, int  x, int  y, int  flag, void *param)
 {
@@ -32,11 +33,6 @@ void mouse_callback(int  event, int  x, int  y, int  flag, void *param)
 		cout << "MakeCellDie : " << x << " " << y << endl;
 		callback_GameOfLife->MakeCellDie(x,y);
 	}
-
-	if (event == EVENT_MOUSEWHEEL) {
-		cout << "Taking Step" << endl;
-		consider_step=true;
-	}
 }
 
 void key_callback(int  key)
@@ -44,7 +40,7 @@ void key_callback(int  key)
 	if (callback_GameOfLife == nullptr) return;
 
 	if (key == ' ') {
-		cout << "Taking Step" << endl;
+		//cout << "Taking Step" << endl;
 		consider_step=true;
 	}
 }
@@ -76,7 +72,7 @@ Mat ConvertToImage(CellMap* GameOfLife,CellMapFactoryConfig& config) {
 void OpenCVWindow(CellMap* GameOfLife,CellMapFactoryConfig& config,int step) {
 
 	if(!consider_step) step=0; 
-	consider_step=false;
+	consider_step=CONSIDER_STEP_DEFAULT;
 
 	GameOfLife->Step(step);
 

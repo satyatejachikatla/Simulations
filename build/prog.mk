@@ -1,5 +1,3 @@
-# https://unix.stackexchange.com/questions/235223/makefile-include-env-file
-
 target ?=  
 objs ?=
 

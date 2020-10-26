@@ -5,14 +5,16 @@ objs :=	main.o \
 		ShellDisplay/ShellDisplay.o \
 		OpenCVWindow/OpenCVWindow.o
 
-CFLAGS += -I. -I..
-NVCFLAGS += -I. -I.. -I../../include/
+CFLAGS +=	-I. \
+			-I..
+NVCFLAGS +=	-I. \
+			-I.. \
+			$(CUDA_UTILS_INCLUDE)
 
 LDFLAGS += -lm -L../CellMap/ -lcellmap
 NVLDFLAGS += -lm -L../CellMap/ -lcellmap
 
-LDFLAGS += -Wl,--no-as-needed \
-			$(shell pkg-config opencv --cflags --libs)
+LDFLAGS +=  $(shell pkg-config opencv --cflags --libs)
 NVLDFLAGS += $(shell pkg-config opencv --cflags --libs)
 
 all: cellmap $(target)
@@ -24,4 +26,4 @@ cellmap:
 clean : clean_build
 	$(MAKE) -C ../CellMap clean 
 
-include ../../build/prog.mk
+include $(TOPDIR)/build/prog.mk
