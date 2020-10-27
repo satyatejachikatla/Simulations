@@ -10,7 +10,7 @@ cd install
 ./game-of-life CPU CL
 ```
 
-![GOL](https://github.com/turrentrock/Simulations/blob/master/GameOfLife/res/GOL.gif)
+![GOL](https://raw.githubusercontent.com/turrentrock/Simulations/main/GameOfLife/res/GOL.gif)
 
 ### References
 
