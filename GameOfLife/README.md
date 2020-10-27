@@ -7,7 +7,7 @@ cd UT
 make
 . export.sh
 cd install
-./game-of-life CPU CL
+./game-of-life CPU CV
 ```
 
 ![GOL](https://raw.githubusercontent.com/turrentrock/Simulations/main/GameOfLife/res/GOL.gif)
