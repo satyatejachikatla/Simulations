@@ -1,3 +1,5 @@
+#pragma OPENCL EXTENSION cl_intel_printf : enable
+
 int mod(int value,int m) {
 	int modulo = value % m;
 	if (modulo < 0) modulo += m;
@@ -32,6 +34,10 @@ __kernel void CellMapOpenCLStep(__global bool* cells_gpu,__global bool* cells_gp
 	
 	int i = get_group_id(0) * get_local_size(0) + get_local_id(0);
 	int j = get_group_id(1) * get_local_size(1) + get_local_id(1);
+
+	//printf("%d %d\n",i,j);
+	
+	//return;
 
 	if(i >= width || j >= height) return;
 

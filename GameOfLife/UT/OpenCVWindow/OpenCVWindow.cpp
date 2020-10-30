@@ -8,7 +8,7 @@
 #include <opencv2/highgui/highgui.hpp>
 
 #define WINDOW_NAME "GameOfLife"
-#define CONSIDER_STEP_DEFAULT true
+#define CONSIDER_STEP_DEFAULT false
 #define SCALE 10
 
 using namespace std;

@@ -2,11 +2,10 @@
 #include <iostream>
 #include <cmath>
 
+#include <OpenCLErrors.hpp>
 #include <CellMap/GPU/CellMapOpenCL.hpp>
 
 using namespace std;
-
-#define MAX_THREADS_IN_AXIS 32.0
 
 CellMapOpenCL::CellMapOpenCL(int width, int height, bool edge_wrap) :
 	CellMap(width,height,edge_wrap) {
@@ -32,34 +31,32 @@ CellMapOpenCL::~CellMapOpenCL(){
 
 void CellMapOpenCL::Step(int step_count) {
 
+
+	int MAX_THREADS_IN_AXIS= 1;//sqrt(kernel.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(device));
 	cl::NDRange blocks(ceil(width/MAX_THREADS_IN_AXIS),ceil(height/MAX_THREADS_IN_AXIS));
 	cl::NDRange threads(MAX_THREADS_IN_AXIS,MAX_THREADS_IN_AXIS);
 
-
-
 	cl::CommandQueue queue(context);
 
-	uint8_t* cells_data = cells->data();
-
-	queue.enqueueWriteBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells_data);
+	checkOpenCLErrors(queue.enqueueWriteBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells->data()));
 
 	for(int c=0;c<step_count;c++) {
 		if (c%2 == 0) {
-			kernel.setArg(0,cells_gpu);
-			kernel.setArg(1,cells_gpu_temp);
+			checkOpenCLErrors(kernel.setArg(0,cells_gpu));
+			checkOpenCLErrors(kernel.setArg(1,cells_gpu_temp));
 		} else {
-			kernel.setArg(1,cells_gpu);
-			kernel.setArg(0,cells_gpu_temp);			
+			checkOpenCLErrors(kernel.setArg(1,cells_gpu));
+			checkOpenCLErrors(kernel.setArg(0,cells_gpu_temp));			
 		}
-		kernel.setArg(2,width);
-		kernel.setArg(3,height);
-		kernel.setArg(4,edgeWrap);
-		queue.enqueueNDRangeKernel(kernel,cl::NullRange,blocks,threads);
+		checkOpenCLErrors(kernel.setArg(2,width));
+		checkOpenCLErrors(kernel.setArg(3,height));
+		checkOpenCLErrors(kernel.setArg(4,edgeWrap));
+		checkOpenCLErrors(queue.enqueueNDRangeKernel(kernel,cl::NullRange,blocks,threads));
 	}
 	if(step_count%2==0) {
-		queue.enqueueReadBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells_data);
+		checkOpenCLErrors(queue.enqueueReadBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells->data()));
 	} else {
-		queue.enqueueReadBuffer(cells_gpu_temp,CL_TRUE,0,sizeof(bool)*width*height,cells_data);
+		checkOpenCLErrors(queue.enqueueReadBuffer(cells_gpu_temp,CL_TRUE,0,sizeof(bool)*width*height,cells->data()));
 	}
 
 }
