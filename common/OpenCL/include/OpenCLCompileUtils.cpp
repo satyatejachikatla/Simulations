@@ -7,7 +7,9 @@
 
 #include <OpenCLCompileUtils.hpp>
 
-#if CL_HPP_TARGET_OPENCL_VERSION == 120
+#if CL_HPP_TARGET_OPENCL_VERSION == 110
+	#define COMPILE_OPTION "-cl-std=CL1.1"
+#elif CL_HPP_TARGET_OPENCL_VERSION == 120
 	#define COMPILE_OPTION "-cl-std=CL1.2"
 #elif  CL_HPP_TARGET_OPENCL_VERSION == 200
 	#define COMPILE_OPTION "-cl-std=CL2.1"
@@ -50,9 +52,13 @@ cl::Program OpenCLCreateProgram(const std::string& file) {
 	cl::Program program(context,sources);
 
 	int status = program.build(COMPILE_OPTION);
+
+	std::cout << "Build Info :" << std::endl;
+	std::cout << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device) << "\n";
+	std::cout << "-------------------------------------------------" << std::endl;
 	if(status != CL_SUCCESS)
 	{
-		std::cout << program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(device) << "\n";
+
 		exit(EXIT_FAILURE);
 	}
 

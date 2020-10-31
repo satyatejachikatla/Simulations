@@ -34,8 +34,8 @@ int main (int argc,char** argv) {
 
 	CellMapFactoryConfig config;
 	config.implementation = imp;
-	config.height = 100;
-	config.width = 100;
+	config.height = 1000;
+	config.width = 1000;
 	config.edge_wrap = true;
 	
 	CellMap* GameOfLife = CellMapFactory(config);

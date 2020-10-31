@@ -31,11 +31,6 @@ CellMapOpenCL::~CellMapOpenCL(){
 
 void CellMapOpenCL::Step(int step_count) {
 
-
-	int MAX_THREADS_IN_AXIS= 1;//sqrt(kernel.getWorkGroupInfo<CL_KERNEL_WORK_GROUP_SIZE>(device));
-	cl::NDRange blocks(ceil(width/MAX_THREADS_IN_AXIS),ceil(height/MAX_THREADS_IN_AXIS));
-	cl::NDRange threads(MAX_THREADS_IN_AXIS,MAX_THREADS_IN_AXIS);
-
 	cl::CommandQueue queue(context);
 
 	checkOpenCLErrors(queue.enqueueWriteBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells->data()));
@@ -51,7 +46,7 @@ void CellMapOpenCL::Step(int step_count) {
 		checkOpenCLErrors(kernel.setArg(2,width));
 		checkOpenCLErrors(kernel.setArg(3,height));
 		checkOpenCLErrors(kernel.setArg(4,edgeWrap));
-		checkOpenCLErrors(queue.enqueueNDRangeKernel(kernel,cl::NullRange,blocks,threads));
+		checkOpenCLErrors(queue.enqueueNDRangeKernel(kernel,cl::NullRange,cl::NDRange(width,height)));
 	}
 	if(step_count%2==0) {
 		checkOpenCLErrors(queue.enqueueReadBuffer(cells_gpu,CL_TRUE,0,sizeof(bool)*width*height,cells->data()));

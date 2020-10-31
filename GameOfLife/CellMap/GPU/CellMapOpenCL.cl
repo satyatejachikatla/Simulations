@@ -1,5 +1,3 @@
-#pragma OPENCL EXTENSION cl_intel_printf : enable
-
 int mod(int value,int m) {
 	int modulo = value % m;
 	if (modulo < 0) modulo += m;
@@ -32,12 +30,20 @@ int CellMapOpenCLGetNeighbourCount(__global bool* cells_gpu,int x,int y,int widt
 
 __kernel void CellMapOpenCLStep(__global bool* cells_gpu,__global bool* cells_gpu_temp,int width,int height,char edge_wrap) {
 	
+	int	Gid[2];
+	Gid[0]= get_global_id(0);
+	Gid[1]= get_global_id(1);
+	int	gid[2];
+	gid[0] = get_group_id(0);
+	gid[1] = get_group_id(1);
+	int lid[2];
+	lid[0] =get_local_id(0);
+	lid[1] =get_local_id(1);
+
 	int i = get_group_id(0) * get_local_size(0) + get_local_id(0);
 	int j = get_group_id(1) * get_local_size(1) + get_local_id(1);
 
-	//printf("%d %d\n",i,j);
-	
-	//return;
+	//printf("(i,j):(%d,%d) Global:(%d,%d) Group:(%d,%d) Local:(%d,%d)\n",i,j,Gid[0],Gid[1],gid[0],gid[1],lid[0],lid[1]);
 
 	if(i >= width || j >= height) return;
 

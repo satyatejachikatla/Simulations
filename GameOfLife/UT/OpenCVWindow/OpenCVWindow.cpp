@@ -9,7 +9,7 @@
 
 #define WINDOW_NAME "GameOfLife"
 #define CONSIDER_STEP_DEFAULT false
-#define SCALE 10
+#define SCALE 1
 
 using namespace std;
 using namespace cv;

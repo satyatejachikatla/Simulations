@@ -14,6 +14,10 @@ NVCFLAGS +=	-I. \
 			$(CUDA_UTILS_INCLUDE) \
 			$(OPENCL_UTILS_INCLUDE) 
 
+SUBDIR_CFLAGS := $(CFLAGS)
+SUBDIR_NVCFLAGS := $(NVCFLAGS)
+SUBDIR_LDFLAGS := $(LDFLAGS)
+SUBDIR_NVLDFLAGS := $(SUBDIR_NVLDFLAGS)
 
 LDFLAGS += -lm -L../CellMap/ -lcellmap
 NVLDFLAGS += -lm -L../CellMap/ -lcellmap
@@ -24,8 +28,11 @@ NVLDFLAGS += $(shell pkg-config opencv --cflags --libs)
 all: cellmap $(target) install
 
 cellmap:
-	$(MAKE) LDFLAGS= \
-	NVLDFLAGS= -C ../CellMap
+	$(MAKE) CFLAGS="$(SUBDIR_CFLAGS)" \
+	LDFLAGS="$(SUBDIR_LDFLAGS)" \
+	NVCFLAGS="$(SUBDIR_NVCFLAGS)" \
+	NVLDFLAGS="$(SUBDIR_NVLDFLAGS)" \
+	-C ../CellMap
 	
 
 install: cellmap $(target)
