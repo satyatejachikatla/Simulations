@@ -60,3 +60,7 @@ echo "-------------------------------------------"
 #======================================
 echo "Starting working Shell"
 bash
+echo "-------------------------------------------"
+#======================================
+echo "Cleaning env"
+$MAKE -C $TOPDIR/common/OpenCL/include clean_build
