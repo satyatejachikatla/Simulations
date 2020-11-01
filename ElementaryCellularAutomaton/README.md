@@ -6,6 +6,9 @@
 make
 ./run.sh
 ```
+![Rule30](https://raw.githubusercontent.com/turrentrock/Simulations/main/ElementaryCellularAutomaton/res/Rule30.gif)
+![Rule45](https://raw.githubusercontent.com/turrentrock/Simulations/main/ElementaryCellularAutomaton/res/Rule45.gif)
+![Rule90](https://raw.githubusercontent.com/turrentrock/Simulations/main/ElementaryCellularAutomaton/res/Rule90.gif)
 
 ## References
 

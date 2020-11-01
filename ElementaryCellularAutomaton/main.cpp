@@ -10,9 +10,11 @@ using namespace std;
 
 int main (int argc,char** argv) {
 
-	int width = 50;
-	int height = 50;
+	int width = 100;
+	int height = 100;
 	std::vector<bool> rule{0,1,1,1,1,0,0,0}; // Rule 30
+//	std::vector<bool> rule{1,0,1,1,0,1,0,0}; // Rule 45
+//	std::vector<bool> rule{0,1,0,1,1,0,1,0}; // Rule 90
 
 	ElementaryCells Wolfman(rule,width,true);
 	std::vector<bool> buff(width);
