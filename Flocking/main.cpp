@@ -10,16 +10,16 @@
 int main (int argc,char** argv) {
 
 	int width = 100;
-	int height = 100;
+	int height = 50;
 
-	Flock flock(10,width,height);
+	Flock flock(20,width,height);
 
 	OpenCVWindowInit(flock);
 
 	while(true) {
 		flock.Update();
 		OpenCVWindow();
-		usleep(1000);
+		usleep(100000);
 	}
 	return 0;
 }

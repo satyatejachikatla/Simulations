@@ -36,20 +36,26 @@ void key_callback(int  key)
 Mat GetImage() {
 
 	int nx,ny;
+
 	nx=width;
 	ny=height;
 
 	cv::Mat img(ny,nx,CV_8UC3,cv::Scalar(0,0,0));
 
-	for (int j = 0; j < ny; j++) {
-		for (int i = 0; i < nx; i++) {
+	for ( auto boid : flock->GetBoids() ) {
+
 			int ir,ig,ib;
-			ir = ig = ib = 255 * 0;
+			int i,j;
+
+			glm::vec2 positon = boid.GetPosition();
+			i = positon.x;
+			j = positon.y;
+
+			ir = ig = ib = 255;
 
 			img.at<cv::Vec3b>(j,i)[0] = ib;/*B*/
 			img.at<cv::Vec3b>(j,i)[1] = ig;/*G*/
 			img.at<cv::Vec3b>(j,i)[2] = ir;/*R*/
-		}
 	}
 
 	return img;
@@ -76,8 +82,8 @@ void OpenCVWindowInit(Flock& f) {
 
 	flock = &f;
 
-	img1 = Mat(width,height,CV_8UC3,cv::Scalar(0,0,0));
-	img2 = Mat(width*SCALE,height*SCALE,CV_8UC3,cv::Scalar(0,0,0));
+	img1 = Mat(height,width,CV_8UC3,cv::Scalar(0,0,0));
+	img2 = Mat(height*SCALE,width*SCALE,CV_8UC3,cv::Scalar(0,0,0));
 
 	namedWindow( WINDOW_NAME, WINDOW_AUTOSIZE );
 	setMouseCallback(WINDOW_NAME, mouse_callback);

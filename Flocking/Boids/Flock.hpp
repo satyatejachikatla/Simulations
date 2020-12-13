@@ -9,8 +9,9 @@ class Flock {
 
 private:
 
-	int width;
-	int height;
+	glm::vec2 bounds;
+
+	float preception_radius = 5.0f;
 
 	std::vector<Boid> boids;
 
@@ -21,8 +22,9 @@ public:
 
 	void Update();
 
-	int GetWidth() const { return width; }
-	int GetHeight() const { return height; }
+	const int GetWidth() const { return bounds.x; }
+	const int GetHeight() const { return bounds.y; }
+	const std::vector<Boid>& GetBoids() { return boids; }
 
 };
 
