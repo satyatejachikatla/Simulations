@@ -10,9 +10,9 @@
 int main (int argc,char** argv) {
 
 	int width = 100;
-	int height = 50;
+	int height = 100;
 
-	Flock flock(30,width,height);
+	Flock flock(50,width,height);
 
 	OpenCVWindowInit(flock);
 

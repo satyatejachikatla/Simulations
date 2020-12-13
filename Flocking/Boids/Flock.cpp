@@ -23,6 +23,7 @@ void Flock::Update() {
 
 		b.Align(neighbour_boids);
 		b.Cohesion(neighbour_boids);
+		b.Seperation(neighbour_boids);
 	}
 
 	for (auto& b : boids) {

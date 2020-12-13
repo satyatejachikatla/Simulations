@@ -2,10 +2,12 @@
 
 ## Steps To Run
 ```
-
+../build/env.sh
+make
+./run.sh
 ```
 
-![res](https://raw.githubusercontent.com/turrentrock/Simulations/main/Flocking/res)
+![Flocking](https://raw.githubusercontent.com/turrentrock/Simulations/main/Flocking/res/Flocking.gif)
 
 ## References
 

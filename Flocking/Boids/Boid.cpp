@@ -12,6 +12,7 @@ Boid::Boid(glm::vec2 position,glm::vec2 velocity,glm::vec2 acceleration) :
 	limit_acceleration_mag(4.0f), 
 	aling_steering_mag(2.0f),
 	cohesion_steering_mag(0.1f),
+	seperation_steering_mag(0.2f),
 /* End Magic Numbers */
 
 	position(position),
@@ -67,6 +68,27 @@ void Boid::Cohesion(const std::vector<Boid*>& neighbours){
 		steering = preception_radius_postion - this->GetPosition();
 
 		SetMag(steering,cohesion_steering_mag);
+	}
+
+	// Update
+	acceleration += steering;
+}
+
+void Boid::Seperation(const std::vector<Boid*>& neighbours){
+
+	glm::vec2 diff = glm::vec2(0.0f);
+	glm::vec2 steering = glm::vec2(0.0f);
+
+	for ( auto n : neighbours) {
+		diff = this->GetPosition() - n->GetPosition();
+		diff /= (glm::length(diff)); // If cores happen need to add small error
+
+		steering += diff;
+	}
+
+	if (neighbours.size() > 0){
+		steering /= neighbours.size();
+		SetMag(steering,seperation_steering_mag);
 	}
 
 	// Update

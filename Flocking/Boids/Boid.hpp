@@ -20,6 +20,7 @@ private:
 
 	float cohesion_steering_mag;
 	float aling_steering_mag;
+	float seperation_steering_mag;
 
 	void Limit(glm::vec2& quantity,float limit_mag);
 	void SetMag(glm::vec2& quantity,float mag);
@@ -30,6 +31,7 @@ public:
 
 	void Align(const std::vector<Boid*>& neighbours);
 	void Cohesion(const std::vector<Boid*>& neighbours);
+	void Seperation(const std::vector<Boid*>& neighbours);
 	void Update();
 	void UpdatePositionToBounds(const glm::vec2& bounds);
 
