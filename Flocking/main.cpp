@@ -12,7 +12,7 @@ int main (int argc,char** argv) {
 	int width = 100;
 	int height = 50;
 
-	Flock flock(20,width,height);
+	Flock flock(30,width,height);
 
 	OpenCVWindowInit(flock);
 

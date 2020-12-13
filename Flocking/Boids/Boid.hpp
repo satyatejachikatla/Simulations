@@ -17,18 +17,23 @@ private:
 
 	float limit_velocity_mag;
 	float limit_acceleration_mag;
-	float limit_aling_steering_mag;
 
-	void ApplyLimits();
+	float cohesion_steering_mag;
+	float aling_steering_mag;
+
+	void Limit(glm::vec2& quantity,float limit_mag);
+	void SetMag(glm::vec2& quantity,float mag);
 
 public:
 	Boid() = delete;
 	explicit Boid(glm::vec2 position,glm::vec2 velocity,glm::vec2 acceleration);
 
-	void Align(const float preception_radius, const std::vector<Boid>& neighbours);
+	void Align(const std::vector<Boid*>& neighbours);
+	void Cohesion(const std::vector<Boid*>& neighbours);
 	void Update();
 	void UpdatePositionToBounds(const glm::vec2& bounds);
 
+	void ClearAcceleration() { acceleration*=0.0f; }
 	const glm::vec2& GetPosition() { return position; }
 	const glm::vec2& GetVelocity() { return velocity; }
 	const glm::vec2& GetAcceleration() { return acceleration; }

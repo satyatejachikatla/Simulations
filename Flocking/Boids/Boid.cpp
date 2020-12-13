@@ -6,10 +6,13 @@
 using namespace std;
 
 Boid::Boid(glm::vec2 position,glm::vec2 velocity,glm::vec2 acceleration) :
-	limit_velocity_mag(5.0f) , 
-	limit_acceleration_mag(5.0f), 
-	limit_aling_steering_mag(0.001f),
 
+/* Magic Numbers */
+	limit_velocity_mag(4.0f) , 
+	limit_acceleration_mag(4.0f), 
+	aling_steering_mag(2.0f),
+	cohesion_steering_mag(0.1f),
+/* End Magic Numbers */
 
 	position(position),
 	velocity(velocity),
@@ -17,58 +20,63 @@ Boid::Boid(glm::vec2 position,glm::vec2 velocity,glm::vec2 acceleration) :
 	{
 }
 
-void Boid::ApplyLimits() {
-	if(glm::length(velocity) > limit_velocity_mag) 
-		velocity = glm::normalize(velocity)*limit_velocity_mag;
-	if(glm::length(acceleration) > limit_acceleration_mag)
-		acceleration = glm::normalize(acceleration)*limit_acceleration_mag;
+void Boid::Limit(glm::vec2& quantity,float limit_mag) {
+	if(glm::length(quantity) > limit_mag) 
+		quantity = glm::normalize(quantity)*limit_mag;
 }
 
-void Boid::Align(const float preception_radius, const std::vector<Boid>& neighbours){
-	
-	int preception_radius_boid_count = 0;
+void Boid::SetMag(glm::vec2& quantity,float mag) {
+	quantity = glm::normalize(quantity)*mag;
+}
+
+
+void Boid::Align(const std::vector<Boid*>& neighbours){
 
 	glm::vec2 preception_radius_direction = glm::vec2(0.0f);
 	glm::vec2 steering = glm::vec2(0.0f);
 
 	for ( auto n : neighbours) {
-		if ( &n == this ) continue;
-
-		glm::vec2 p1 = n.GetPosition();
-		glm::vec2 p2 = this->GetPosition();
-
-		float dist_btwn_boids = glm::distance(p1,p2);
-
-		if(dist_btwn_boids > preception_radius) continue;
-
-		preception_radius_boid_count ++;
-		preception_radius_direction += n.GetVelocity(); 
-
+		preception_radius_direction += n->GetVelocity(); 
 	}
 
-	if (preception_radius_boid_count > 0){
-		preception_radius_direction /= preception_radius_boid_count;
+	if (neighbours.size() > 0){
+		preception_radius_direction /= neighbours.size();
 		steering = preception_radius_direction - velocity;
 
-		// cout << "preception_radius_boid_count:" << preception_radius_boid_count << endl;
-		// cout << "velocity:" << glm::to_string(velocity) << endl;
-		// cout << "preception_radius_direction:" << glm::to_string(preception_radius_direction) << endl;
 		// cout << "steering:" << glm::to_string(steering) << endl;
-		// cout << "steering.length():" << steering.length() << endl;
 
-		// Limit Steering
-		if(glm::length(steering) > limit_aling_steering_mag)
-			steering = glm::normalize(steering)*limit_aling_steering_mag;
+		SetMag(steering,aling_steering_mag);
 
 	}
 
 	// Update
-	velocity += steering;
+	acceleration += steering;
+}
+
+void Boid::Cohesion(const std::vector<Boid*>& neighbours){
+
+	glm::vec2 preception_radius_postion= glm::vec2(0.0f);
+	glm::vec2 steering = glm::vec2(0.0f);
+
+	for ( auto n : neighbours) {
+		preception_radius_postion += n->GetPosition(); 
+	}
+
+	if (neighbours.size() > 0){
+		preception_radius_postion /= neighbours.size();
+		steering = preception_radius_postion - this->GetPosition();
+
+		SetMag(steering,cohesion_steering_mag);
+	}
+
+	// Update
+	acceleration += steering;
 }
 
 void Boid::Update(){
 	
-	ApplyLimits();
+	Limit(velocity,limit_velocity_mag);
+	Limit(acceleration,limit_acceleration_mag);
 	
 	position += velocity;
 	velocity += acceleration;

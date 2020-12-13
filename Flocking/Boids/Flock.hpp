@@ -15,6 +15,8 @@ private:
 
 	std::vector<Boid> boids;
 
+	std::vector<Boid*> GetNeighbourBoidsTo(Boid& boid);
+
 public:
 
 	Flock() = delete;

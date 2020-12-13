@@ -16,11 +16,38 @@ Flock::Flock(int number_of_boids,int width,int height) :
 
 void Flock::Update() {
 
-	for (auto& b : boids) b.Align(preception_radius,boids);
+	for (auto& b : boids){
+		std::vector<Boid*> neighbour_boids = GetNeighbourBoidsTo(b); 
+
+		b.ClearAcceleration();
+
+		b.Align(neighbour_boids);
+		b.Cohesion(neighbour_boids);
+	}
 
 	for (auto& b : boids) {
 		b.Update();
 		b.UpdatePositionToBounds(bounds);
 	}
 }
- 	
+
+
+std::vector<Boid*> Flock::GetNeighbourBoidsTo(Boid& boid) {
+
+	std::vector<Boid*> ret;
+
+	for ( auto& n : boids) {
+		if ( &n == &boid ) continue;
+
+		glm::vec2 p1 = n.GetPosition();
+		glm::vec2 p2 = boid.GetPosition();
+
+		float dist_btwn_boids = glm::distance(p1,p2);
+
+		if(dist_btwn_boids > preception_radius) continue;
+
+		ret.push_back(&n);
+	}
+
+	return ret;
+}
