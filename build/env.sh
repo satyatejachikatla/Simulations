@@ -37,7 +37,8 @@ export LDFLAGS="-lcuda `pkg-config cudart-10.2 --cflags --libs`"
 #nvcc
 export NVCC="nvcc"
 
-export NVCFLAGS="-Werror all-warnings"
+#export NVCFLAGS="-Werror all-warnings"
+export NVCFLAGS=""
 export NVLDFLAGS="$OPENCL_LIBRARY"
 
 #======================================
