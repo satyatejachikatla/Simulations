@@ -2,7 +2,10 @@
 target := libuniverse.so
 
 objs :=	Universe.o \
+		Uniforms.o \
+		FrameBuffer.o \
 		Camera.o \
+		Renderer.o \
 		Bodies/Body.o \
 		Bodies/BlackHole.o
 

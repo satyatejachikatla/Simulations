@@ -2,4 +2,6 @@
 
 export LD_LIBRARY_PATH="."
 cd install
+
+
 ./bh $@

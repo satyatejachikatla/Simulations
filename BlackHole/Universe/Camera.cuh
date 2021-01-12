@@ -6,21 +6,9 @@
 
 #include <CudaErrors.cuh>
 #include <CudaVector.cuh>
+#include <Universe/FrameBuffer.cuh>
+#include <Universe/Uniforms.cuh>
 #include <Universe/Bodies/Body.cuh>
-
-
-struct FrameBuffer {
-
-	int size;
-	vec3* d_frame_buffer;
-	std::vector<vec3> h_frame_buffer;
-
-	FrameBuffer(int size);
-	~FrameBuffer();
-
-	void copyDeviceToHost();
-
-};
 
 struct DeviceCamera {
 
@@ -30,7 +18,6 @@ struct DeviceCamera {
 	__device__ ~DeviceCamera();
 
 };
-
 
 class Camera {
 
@@ -52,7 +39,7 @@ public:
 	int getWidth() { return h_width; }
 	int getHeight() { return h_height; }
 
-	const std::vector<vec3>& getImage();
+	const std::vector<vec3>& getImage(UniformsList l);
 
 };
 

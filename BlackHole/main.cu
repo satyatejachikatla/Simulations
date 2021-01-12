@@ -25,7 +25,6 @@ int main (int argc,char** argv) {
 	while(true) {
 		MyWorld.step();
 		OpenCVWindow();
-		usleep(1000*100); // Frame Rate Limiter
 	}
 	return 0;
 }

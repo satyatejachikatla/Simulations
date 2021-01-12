@@ -1,29 +1,16 @@
 #include <Universe/Camera.cuh>
+#include <Universe/FrameBuffer.cuh>
+#include <Universe/Renderer.cuh>
+
 #include <iostream>
 
 using namespace std;
-
-__global__ void Render(DeviceCamera **d_camera_ptr,vec3 *d_fb) {
-
-	DeviceCamera* d_camera = *d_camera_ptr;
-
-	int i = threadIdx.x + blockIdx.x * blockDim.x;
-	int j = threadIdx.y + blockIdx.y * blockDim.y;
-
-	if((i >= d_camera -> d_width) || (j >= d_camera -> d_height)) return;
-
-	int pixel_index = j*(d_camera -> d_width) + i;
-
-	d_fb[pixel_index] = vec3((float)i/(d_camera -> d_width),(float)j / (d_camera -> d_height),1.0f);
-}
-
 
 __global__ void CameraInit(
 	int width,
 	int height,
 	DeviceCamera **d_camera_ptr) {
 		if (threadIdx.x == 0 && blockIdx.x == 0) {
-			//printf("CameraInitBegin\n");
 			*d_camera_ptr = new DeviceCamera(width,height);
 		}
 }
@@ -39,19 +26,6 @@ __device__ DeviceCamera::DeviceCamera(int width,int height){
 	d_height = height;
 }
 __device__ DeviceCamera::~DeviceCamera(){
-}
-FrameBuffer::FrameBuffer(int s){
-	size = s;
-	checkCudaErrors(cudaMalloc((void **)&d_frame_buffer, sizeof(vec3)*size));
-
-	h_frame_buffer.resize(size,vec3(0.0f,0.0f,0.0f)); 
-}
-
-FrameBuffer::~FrameBuffer(){
-	checkCudaErrors(cudaFree(d_frame_buffer));
-}
-void FrameBuffer::copyDeviceToHost(){
-	checkCudaErrors(cudaMemcpy(h_frame_buffer.data(),d_frame_buffer,size*sizeof(vec3),cudaMemcpyDeviceToHost));
 }
 
 Camera::Camera(int width,int height) :
@@ -86,9 +60,9 @@ Camera::~Camera() {
 	checkCudaErrors(cudaFree(d_camera));
 }
 
-const std::vector<vec3>& Camera::getImage(){
+const std::vector<vec3>& Camera::getImage(UniformsList l){
 	
-	Render<<<blocks,threads>>>(d_camera,fb.d_frame_buffer);
+	Render<<<blocks,threads>>>(d_camera,fb.d_frame_buffer,l);
 	fb.copyDeviceToHost();
 
 	return fb.h_frame_buffer;

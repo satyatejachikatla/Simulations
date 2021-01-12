@@ -30,7 +30,9 @@ void mouse_callback(int  event, int  x, int  y, int  flag, void *param) {
 }
 
 void key_callback(int  key) {
-
+	if( key == 'q') {
+		exit(EXIT_SUCCESS);
+	}
 }
 
 Mat GetImage() {
