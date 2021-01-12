@@ -24,6 +24,7 @@ public:
 
 
 	void step();
+	const std::vector<vec3>& getImage() { return h_camera.getImage(); }
 
 	Universe(UniverseConfig& c);
 	~Universe();

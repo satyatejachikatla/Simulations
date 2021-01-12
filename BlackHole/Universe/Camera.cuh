@@ -13,9 +13,13 @@ struct FrameBuffer {
 
 	int size;
 	vec3* d_frame_buffer;
+	std::vector<vec3> h_frame_buffer;
 
-	__device__ FrameBuffer(int size);
-	__device__ ~FrameBuffer();
+	FrameBuffer(int size);
+	~FrameBuffer();
+
+	void copyDeviceToHost();
+
 };
 
 struct DeviceCamera {
@@ -32,12 +36,13 @@ class Camera {
 
 private:
 
+	dim3 threads,blocks;
+
 	int h_width;
 	int h_height;
-	std::vector<vec3> h_image;
 
 	DeviceCamera** d_camera;
-	FrameBuffer** d_fb;
+	FrameBuffer fb;
 
 public:
 

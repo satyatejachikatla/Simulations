@@ -7,7 +7,7 @@ struct DisplayConfig {
 	int width;
 	int height;
 
-	Universe* universe_obj;	
+	Universe* universe_obj;
 };
 
 void OpenCVWindowInit(DisplayConfig& c);

@@ -36,6 +36,24 @@ void key_callback(int  key) {
 Mat GetImage() {
 
 	Mat img(height,width,CV_8UC3,cv::Scalar(0,0,0));
+	const std::vector<vec3>& img_vec = config.universe_obj->getImage();
+
+	unsigned int nx=config.width;
+	unsigned int ny=config.height;
+
+	for (int j = ny-1; j >= 0; j--) {
+		for (int i = 0; i < nx; i++) {
+			size_t pixel_index = j*nx + i;
+			int ir = int(255.99*img_vec[pixel_index].r());
+			int ig = int(255.99*img_vec[pixel_index].g());
+			int ib = int(255.99*img_vec[pixel_index].b());
+			
+			img.at<cv::Vec3b>(ny-j-1,i)[0] = ib;/*B*/
+			img.at<cv::Vec3b>(ny-j-1,i)[1] = ig;/*G*/
+			img.at<cv::Vec3b>(ny-j-1,i)[2] = ir;/*R*/
+		}
+	}
+
 
 	return img;
 
