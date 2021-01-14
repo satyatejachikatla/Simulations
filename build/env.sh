@@ -31,11 +31,17 @@ export CC="gcc"
 export CXX="g++ -std=c++11"
 export AR="ar"
 
+#For Gprof
+# export CC="gcc -pg"
+# export CXX="g++ -std=c++11 -pg"
+# export AR="ar -pg"
+
+
 export CFLAGS="-Wl,--no-as-needed $OPENCL_CFLGAS"
 export LDFLAGS="-lcuda `pkg-config cudart-10.2 --cflags --libs`"
 
 #nvcc
-export NVCC="nvcc"
+export NVCC="nvcc -pg"
 
 #export NVCFLAGS="-Werror all-warnings"
 export NVCFLAGS=""

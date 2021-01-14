@@ -23,6 +23,7 @@ private:
 	long h_start_time;
 
 	Uniform<long> u_time;
+	Uniform<vec2> u_resolution;
 
 	UniformsList l;
 

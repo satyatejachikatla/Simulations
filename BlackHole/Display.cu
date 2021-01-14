@@ -50,6 +50,10 @@ Mat GetImage() {
 			int ig = int(255.99*img_vec[pixel_index].g());
 			int ib = int(255.99*img_vec[pixel_index].b());
 			
+			ir = (ir > 255 ? 255 : ir) < 0 ? 0 : ir;
+			ig = (ig > 255 ? 255 : ig) < 0 ? 0 : ig;
+			ib = (ib > 255 ? 255 : ib) < 0 ? 0 : ib;
+
 			img.at<cv::Vec3b>(ny-j-1,i)[0] = ib;/*B*/
 			img.at<cv::Vec3b>(ny-j-1,i)[1] = ig;/*G*/
 			img.at<cv::Vec3b>(ny-j-1,i)[2] = ir;/*R*/
