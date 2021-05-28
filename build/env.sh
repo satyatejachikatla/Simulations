@@ -11,6 +11,10 @@ cd -
 # Common Compile Flags
 export MAKE="make"
 
+#cuda defaults
+export CUDA_VERSION=11.0
+export CUDA_UTILS_INCLUDE="-I$TOPDIR/common/CUDA/include"
+
 #opencl defaults
 export OPENCL_VERSION="120"
 export OPENCL_DEFINES="-DCL_HPP_TARGET_OPENCL_VERSION=$OPENCL_VERSION -DCL_HPP_MINIMUM_OPENCL_VERSION=$OPENCL_VERSION" 
@@ -19,12 +23,8 @@ export OPENCL_UTILS_INCLUDE="$OPENCL_DEFINES -I$TOPDIR/common/OpenCL/include -L$
 #export OPENCL_LIBRARY="-L/usr/lib/x86_64-linux-gnu/ -lOpenCL"
 
 export OPENCL_CFLGAS="-Wno-ignored-attributes"
-export OPENCL_INCLUDE="$OPENCL_DEFINES -I/usr/local/cuda-10.2/targets/x86_64-linux/include/ -I$TOPDIR/vendor/"
-export OPENCL_LIBRARY="-L/usr/local/cuda-10.2/targets/x86_64-linux/lib -lOpenCL"
-
-
-#cuda defaults
-export CUDA_UTILS_INCLUDE="-I$TOPDIR/common/CUDA/include"
+export OPENCL_INCLUDE="$OPENCL_DEFINES -I/usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/include/ -I$TOPDIR/vendor/"
+export OPENCL_LIBRARY="-L/usr/local/cuda-$CUDA_VERSION/targets/x86_64-linux/lib -lOpenCL"
 
 # gcc,g++
 export CC="gcc"
@@ -38,10 +38,10 @@ export AR="ar"
 
 
 export CFLAGS="-Wl,--no-as-needed $OPENCL_CFLGAS"
-export LDFLAGS="-lcuda `pkg-config cudart-10.2 --cflags --libs`"
+export LDFLAGS="-lcuda `pkg-config cudart-$CUDA_VERSION --cflags --libs`"
 
 #nvcc
-export NVCC="nvcc -pg"
+export NVCC="nvcc -pg -std=c++11"
 
 #export NVCFLAGS="-Werror all-warnings"
 export NVCFLAGS=""

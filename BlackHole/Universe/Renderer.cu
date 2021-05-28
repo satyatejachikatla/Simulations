@@ -9,7 +9,7 @@
 #define SURF_DIST       .01
 
 __device__ float clamp(float y , float a, float b ) {
-	return (y > b ? b : y) < a ? a  : y ;  
+	return (y > b ? b : y) < a ? a  : y ;
 }
 
 __device__ float GetDist(vec3 p){
