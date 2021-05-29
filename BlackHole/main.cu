@@ -13,8 +13,8 @@ int main (int argc,char** argv) {
 	DisplayConfig disp_config;
 	UniverseConfig u_config;
 
-	disp_config.width = u_config.width = 1000;
-	disp_config.height = u_config.height = 1000;
+	disp_config.width = u_config.width = 500;
+	disp_config.height = u_config.height = 500;
 
 	Universe MyWorld(u_config);
 

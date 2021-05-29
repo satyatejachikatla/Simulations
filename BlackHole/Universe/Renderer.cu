@@ -1,11 +1,12 @@
 #include <CudaVector.cuh>
 #include <Universe/Renderer.cuh>
 
+// #define GRAVITY
 
 #define PI 3.1415926535897932384626433832795
 
 #define MAX_DIST        100.
-#define MAX_STEPS       10000
+#define MAX_STEPS       5000
 #define SURF_DIST       .01
 
 __device__ float clamp(float y , float a, float b ) {
@@ -29,11 +30,18 @@ __device__ float HorizontalPlaneThroughOrigin(vec3 p) {
 
 __device__ float GetDist(vec3 p){
 
- 	float sphereDist = Sphere(p,vec3(0.0f,0.0f,0.0f),.2f);
+	float sphereBHDist = Sphere(p,vec3(0.0f,0.0f,0.0f),.5f);
+ 	float sphereDist = Sphere(p,vec3(-1.2f,0.0f,-1.2f),.2f);
  	float planeDist = HorizontalPlaneThroughOrigin(p);
  	float torusDist = Torus(p,vec2(1.0f,.08f));
 
- 	float d = torusDist; //fminf(sphereDist,torusDist);;
+ 	#ifdef GRAVITY
+	 	float d = fminf(sphereDist,torusDist);
+	#else
+	 	float d;
+	 	d = fminf(sphereBHDist,torusDist);
+	 	d = fminf(sphereDist,d);
+	#endif
 
  	return d;
 
@@ -52,7 +60,7 @@ __device__ float RayMarch(vec3 ro,vec3 rd){
 	return dO;
 } 
 
-__device__ int RayMarchModified(vec3 ro,vec3 rd){
+__device__ int RayMarchWithGravity(vec3 ro,vec3 rd){
 
 	rd = unit_vector(rd);
 	vec3 black_hole_center = vec3(0.0f,0.0f,0.0f);
@@ -77,10 +85,10 @@ __device__ int RayMarchModified(vec3 ro,vec3 rd){
 		distance_travelled += (rd * speed_of_light * dt).length();
 
 		float closest_distance = GetDist(ro);
-		if (closest_distance < SURF_DIST) return 1;//break;
+		if (closest_distance < SURF_DIST) return 1;
+		if (distance_travelled > MAX_DIST) return 0;
 			
 	}
-
 
 	return 0;
 
@@ -127,9 +135,15 @@ __global__ void Render(DeviceCamera **d_camera_ptr,vec3 *d_fb,UniformsList l) {
 	vec2 fragCoords = vec2(i,j);
 	vec2 uv = (fragCoords-.5*(*l.u_resolution))/(l.u_resolution->y());
 
+	float time = *(l.u_time) / 10000.;
+
 	/*camera start*/
 	float zoom = 1.;
-	vec3 ro = vec3(2.,1.,2.);
+	#if 1
+		vec3 ro = vec3(3.,10.*sin(time),3.);
+	#else
+		vec3 ro = vec3(3.*cos(time),0.,3.*sin(time));
+	#endif
 	vec3 lookat = vec3(0.,0.,0.);
 	vec3 u_world = vec3(0.,1.,0.);
 	vec3 f = unit_vector(lookat-ro);
@@ -143,16 +157,19 @@ __global__ void Render(DeviceCamera **d_camera_ptr,vec3 *d_fb,UniformsList l) {
 	/*camera end*/
 
 
-	// float d = RayMarch(ro,rd);
+	#ifdef GRAVITY
+		/* WithGravity Ray march */
+		float ans = RayMarchWithGravity(ro,rd);
+		d_fb[pixel_index] = vec3(1.0f,1.0f,1.0f)*ans;
+		
+	#else
+		/* Standerd Ray march */
+		float d = RayMarch(ro,rd);
+		vec3 p = ro+rd*d;
+		float diff = GetLight(p);
+		d_fb[pixel_index] = vec3(diff,diff,diff);
 
-	// vec3 p = ro+rd*d;
-
-	// float diff = GetLight(p);
-	// d_fb[pixel_index] = vec3(diff,diff,diff);
-
-	float ans = RayMarchModified(ro,rd);
-	d_fb[pixel_index] = vec3(1.0f,1.0f,1.0f)*ans;
-
+	#endif
 }
 
 
