@@ -3,8 +3,6 @@
 
 
 #include <vector>
-
-#include <Universe/Bodies/Body.cuh>
 #include <Universe/Camera.cuh>
 #include <Universe/Uniforms.cuh>
 

@@ -5,9 +5,7 @@ objs :=	Universe.o \
 		Uniforms.o \
 		FrameBuffer.o \
 		Camera.o \
-		Renderer.o \
-		Bodies/Body.o \
-		Bodies/BlackHole.o
+		Renderer.o
 
 CFLAGS += -I..
 NVCFLAGS += -I.. $(CUDA_UTILS_INCLUDE)

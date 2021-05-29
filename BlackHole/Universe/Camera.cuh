@@ -8,7 +8,6 @@
 #include <CudaVector.cuh>
 #include <Universe/FrameBuffer.cuh>
 #include <Universe/Uniforms.cuh>
-#include <Universe/Bodies/Body.cuh>
 
 struct DeviceCamera {
 

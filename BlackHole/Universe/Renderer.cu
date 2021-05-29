@@ -5,20 +5,35 @@
 #define PI 3.1415926535897932384626433832795
 
 #define MAX_DIST        100.
-#define MAX_STEPS       100
+#define MAX_STEPS       10000
 #define SURF_DIST       .01
 
 __device__ float clamp(float y , float a, float b ) {
 	return (y > b ? b : y) < a ? a  : y ;
 }
 
+__device__ float Torus(vec3 p,vec2 r) {
+	float x = vec2(p.x(),p.z()).length() - r.x();
+
+	return vec2(x,p.y()).length() - r.y();
+}
+
+__device__ float Sphere(vec3 p,vec3 o,float r) {
+	return (p - vec3(o.x(),o.y(),o.z())).length() - r;
+}
+
+__device__ float HorizontalPlaneThroughOrigin(vec3 p) {
+	return p.y();
+}
+
+
 __device__ float GetDist(vec3 p){
-	vec4 s = vec4(0.f,0.f,0.f,1.f);
 
- 	float sphereDist = (p - vec3(s.x(),s.y(),s.z())).length() - s.w();
- 	float planeDist = p.y();
+ 	float sphereDist = Sphere(p,vec3(0.0f,0.0f,0.0f),.2f);
+ 	float planeDist = HorizontalPlaneThroughOrigin(p);
+ 	float torusDist = Torus(p,vec2(1.0f,.08f));
 
- 	float d = fminf(sphereDist,planeDist);
+ 	float d = torusDist; //fminf(sphereDist,torusDist);;
 
  	return d;
 
@@ -35,6 +50,40 @@ __device__ float RayMarch(vec3 ro,vec3 rd){
 	}
 
 	return dO;
+} 
+
+__device__ int RayMarchModified(vec3 ro,vec3 rd){
+
+	rd = unit_vector(rd);
+	vec3 black_hole_center = vec3(0.0f,0.0f,0.0f);
+	float G = 5.0f;
+	float black_hole_mass = 1.0f;
+	float speed_of_light = 5.0f;
+	float dt = .001f;
+
+	float distance_travelled = 0.0f;
+
+	for(int i=0;i<MAX_STEPS;i++){
+		vec3 force_direction = unit_vector(black_hole_center - ro);
+		float distance_btwn = (black_hole_center - ro).length();
+
+		// Update direction
+		vec3 acc  =  force_direction * G * black_hole_mass / distance_btwn / distance_btwn;
+		rd = unit_vector(rd * speed_of_light + acc * dt);
+
+		// Update position
+		ro = ro + rd * speed_of_light * dt;
+
+		distance_travelled += (rd * speed_of_light * dt).length();
+
+		float closest_distance = GetDist(ro);
+		if (closest_distance < SURF_DIST) return 1;//break;
+			
+	}
+
+
+	return 0;
+
 } 
 
 __device__ vec3 GetNormal(vec3 p){
@@ -94,12 +143,15 @@ __global__ void Render(DeviceCamera **d_camera_ptr,vec3 *d_fb,UniformsList l) {
 	/*camera end*/
 
 
-	float d = RayMarch(ro,rd);
+	// float d = RayMarch(ro,rd);
 
-	vec3 p = ro+rd*d;
+	// vec3 p = ro+rd*d;
 
-	float diff = GetLight(p);
-	d_fb[pixel_index] = vec3(diff,diff,diff);
+	// float diff = GetLight(p);
+	// d_fb[pixel_index] = vec3(diff,diff,diff);
+
+	float ans = RayMarchModified(ro,rd);
+	d_fb[pixel_index] = vec3(1.0f,1.0f,1.0f)*ans;
 
 }
 

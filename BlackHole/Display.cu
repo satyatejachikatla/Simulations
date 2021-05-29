@@ -11,7 +11,7 @@
 #include <Display.cuh>
 
 #define WINDOW_NAME "BlackHole"
-#define SCALE 10
+#define SCALE 1
 
 using namespace std;
 using namespace cv;
