@@ -12,3 +12,7 @@
 ### BlackHole
 
 ![TopView](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/TopView.gif) <br>
+
+### HitomezashiStitchPatterns
+
+![HitomezashiStitchPatterns](https://raw.githubusercontent.com/turrentrock/Simulations/main/HitomezashiStitchPatterns/res/Patterns.gif)
