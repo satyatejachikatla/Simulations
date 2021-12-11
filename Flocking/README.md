@@ -7,7 +7,7 @@ make
 ./run.sh
 ```
 
-![Flocking](https://raw.githubusercontent.com/turrentrock/Simulations/main/Flocking/res/Flocking.gif)
+![Flocking](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/Flocking/res/Flocking.gif)
 
 ## References
 

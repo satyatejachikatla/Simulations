@@ -8,7 +8,7 @@ make
 ./run.sh CL CV
 ```
 
-![GOL](https://raw.githubusercontent.com/turrentrock/Simulations/main/GameOfLife/res/GOL.gif)
+![GOL](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/GameOfLife/res/GOL.gif)
 
 ## References
 

@@ -4,7 +4,7 @@
 ```
 make && ./stitchPattern 
 ```
-![HitomezashiStitchPatterns](https://raw.githubusercontent.com/turrentrock/Simulations/main/HitomezashiStitchPatterns/res/Patterns.gif)
+![HitomezashiStitchPatterns](https://github.com/satyatejachikatla/Simulations/blob/main/HitomezashiStitchPaterns/res/Patterns.gif)
 
 ## References
 

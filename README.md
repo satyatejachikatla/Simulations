@@ -1,18 +1,18 @@
 # Simulations
 
 ### GameOfLife
-![GOL](https://raw.githubusercontent.com/turrentrock/Simulations/main/GameOfLife/res/GOL.gif) <br>
+![GOL](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/GameOfLife/res/GOL.gif) <br>
 
 ### Elementary Cellular Automaton
-![Rule30](https://raw.githubusercontent.com/turrentrock/Simulations/main/ElementaryCellularAutomaton/res/Rule30.gif)<br>
+![Rule30](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/ElementaryCellularAutomaton/res/Rule30.gif)<br>
 
 ### Flocking
-![Flocking](https://raw.githubusercontent.com/turrentrock/Simulations/main/Flocking/res/Flocking.gif)<br>
+![Flocking](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/Flocking/res/Flocking.gif)<br>
 
 ### BlackHole
 
-![TopView](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/TopView.gif) <br>
+![TopView](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/BlackHole/res/TopView.gif) <br>
 
 ### HitomezashiStitchPatterns
 
-![HitomezashiStitchPatterns](https://raw.githubusercontent.com/turrentrock/Simulations/main/HitomezashiStitchPatterns/res/Patterns.gif)
+![HitomezashiStitchPatterns](https://github.com/satyatejachikatla/Simulations/blob/main/HitomezashiStitchPaterns/res/Patterns.gif

@@ -6,10 +6,10 @@
 make
 ./run.sh
 ```
-![Lensing](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/Lensing.gif)
-![LensingModel](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/LensingModel.gif) <br>
-![TopView](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/TopView.gif)
-![TopViewModel](https://raw.githubusercontent.com/turrentrock/Simulations/main/BlackHole/res/TopViewModel.gif) <br>
+![Lensing](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/BlackHole/res/Lensing.gif)
+![LensingModel](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/BlackHole/res/LensingModel.gif) <br>
+![TopView](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/BlackHole/res/TopView.gif)
+![TopViewModel](https://raw.githubusercontent.com/satyatejachikatla/Simulations/main/BlackHole/res/TopViewModel.gif) <br>
 
 ## References
 
