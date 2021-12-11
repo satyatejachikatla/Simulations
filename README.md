@@ -15,4 +15,4 @@
 
 ### HitomezashiStitchPatterns
 
-![HitomezashiStitchPatterns](https://github.com/satyatejachikatla/Simulations/blob/main/HitomezashiStitchPaterns/res/Patterns.gif
+![HitomezashiStitchPatterns](https://github.com/satyatejachikatla/Simulations/blob/main/HitomezashiStitchPaterns/res/Patterns.gif)
