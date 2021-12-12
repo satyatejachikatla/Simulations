@@ -30,11 +30,6 @@ class Grid {
 
         int IDX(int row,int col);
 
-        bool getTopStitch(int row,int col);
-        bool getLeftStitch(int row,int col);
-        bool getBottomStitch(int row,int col);
-        bool getRightStitch(int row,int col);
-
         void resetVisited();
     public:
         Grid(int width,int height);
@@ -43,10 +38,15 @@ class Grid {
         int getWidth(){return width;}
         int getHeight(){return height;}
 
+        void printGridLeft();
+        void printGridTop();
         int getPixel(int row,int col){return grid[IDX(row,col)].color;}
+
+        bool getTopStitch(int row,int col);
+        bool getLeftStitch(int row,int col);
+        bool getBottomStitch(int row,int col);
+        bool getRightStitch(int row,int col);
 
         void step();
 
-        void printGridLeft();
-        void printGridTop();
 };

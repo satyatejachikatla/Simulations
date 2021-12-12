@@ -63,23 +63,33 @@ void key_callback(int  key)
 void GetImage() {
 
 	int j=0;
-	for (int j=0;j<width;j++) {
-		for (int i = 0; i < height; i++) {
-			color col = getColor(grid->getPixel(j,i));
+	for (int j=0;j<height;j++) {
+		for (int i = 0; i < width; i++) {
+			color col = getColor(grid->getPixel(i,j));
 
 			img1.at<cv::Vec3b>(j,i)[0] = col.b*255;/*B*/
 			img1.at<cv::Vec3b>(j,i)[1] = col.g*255;/*G*/
 			img1.at<cv::Vec3b>(j,i)[2] = col.r*255;/*R*/
 		}
 	}
+
+	resize(img1,img2,img2.size(),0,0,INTER_NEAREST);
+	for (int i = 0; i < height; i++) {
+		for (int j=0;j<width;j++) {
+			bool left = grid->getLeftStitch(j,i);
+			bool top = grid->getTopStitch(j,i);
+			if(top)
+				cv::line(img2,cv::Point(j*SCALE,i*SCALE), cv::Point(j*SCALE,(i+1)*SCALE), cv::Scalar(165,42,42),2);
+			if(left)
+				cv::line(img2,cv::Point(j*SCALE,i*SCALE), cv::Point((j+1)*SCALE,i*SCALE), cv::Scalar(165,42,42),2);
+		}
+	}
+
 }
 
 void OpenCVWindow(){
 	GetImage();
-
-	resize(img1,img2,img2.size(),0,0,INTER_NEAREST);
 	imshow( WINDOW_NAME, img2 );
-
 	int k = waitKey(1);
 	key_callback(k);
 
