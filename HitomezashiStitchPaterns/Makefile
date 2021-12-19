@@ -14,12 +14,7 @@ $(TARGET): $(vertObjFiles) $(fragObjFiles)
 $(TARGET): $(cppFiles) $(hppFiles)
 	g++ $(CFLAGS) -o $(TARGET) $(cppFiles) $(LDFLAGS)
 
-# make shader targets
-%.spv: %
-	${GLSLC} $< -o $@
-
 .PHONY: clean
 
 clean:
 	rm -f $(TARGET)
-	rm -f $(vertObjFiles) $(fragObjFiles)

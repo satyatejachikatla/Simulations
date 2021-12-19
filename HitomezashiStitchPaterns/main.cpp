@@ -14,7 +14,6 @@ int main (int argc,char** argv) {
 	int height = 100;
 
 	Grid stitchPattern(width,height);
-	std::vector<bool> buff(width);
 
 	OpenCVWindowInit(&stitchPattern);
 
