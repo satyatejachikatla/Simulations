@@ -8,4 +8,4 @@ make && ./Pattern
 
 ## References
 
-Numberphile video: https://www.youtube.com/watch?v=JbfhzlMk2eY <br>
+<!-- Numberphile video: https://www.youtube.com/watch?v=JbfhzlMk2eY <br> -->
