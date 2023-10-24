@@ -4,8 +4,8 @@
 ```
 make && ./Pattern 
 ```
-<!-- ![HitomezashiStitchPatterns](https://github.com/satyatejachikatla/Simulations/blob/main/HitomezashiStitchPaterns/res/Patterns.gif) -->
+![DesignPattern](https://github.com/satyatejachikatla/Simulations/blob/main/DesignPattern/res/res.png)
 
 ## References
 
-<!-- Numberphile video: https://www.youtube.com/watch?v=JbfhzlMk2eY <br> -->
+Numberphile video: https://www.reddit.com/r/oddlysatisfying/comments/17dif1m/visualization_of_pi_being_irrational/ <br>
