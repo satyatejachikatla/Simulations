@@ -8,4 +8,4 @@ make && ./Pattern
 
 ## References
 
-Numberphile video: https://www.reddit.com/r/oddlysatisfying/comments/17dif1m/visualization_of_pi_being_irrational/ <br>
+Video: https://www.reddit.com/r/oddlysatisfying/comments/17dif1m/visualization_of_pi_being_irrational/ <br>
